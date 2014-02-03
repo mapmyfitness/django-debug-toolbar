@@ -1,8 +1,18 @@
 from setuptools import setup, find_packages
 
+version = '1.0.1'
+import sys
+if 'sdist' in sys.argv:
+    import mmf_release_tools
+    version = mmf_release_tools.generate_release_version(version, __file__)
+    mmf_release_tools.write_release_version(version)
+else:
+    with open("RELEASE-VERSION", "r") as f:
+        version = f.readlines()[0].strip()
+
 setup(
     name='django-debug-toolbar',
-    version='1.0.1',
+    version=version,
     description='A configurable set of panels that display various debug '
                 'information about the current request/response.',
     long_description=open('README.rst').read(),
