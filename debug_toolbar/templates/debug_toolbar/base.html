@@ -4,6 +4,11 @@
 </style>
 <link rel="stylesheet" href="{% static 'debug_toolbar/css/toolbar.css' %}" type="text/css" />
 <script>//<![CDATA[
+// if require is in mmf_modules namespace, we need to add it to the GNS
+if (typeof window.mmf_modules !== 'undefined' && typeof window.mmf_modules.require !== 'undefined') {
+    require = window.mmf_modules.require;
+    define = window.mmf_modules.define;
+}
 if(!window.jQuery) document.write('<scr'+'ipt src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></scr'+'ipt>');
 //]]></script>
 <script src="{% static 'debug_toolbar/js/toolbar.js' %}"></script>
@@ -61,5 +66,8 @@ if(!window.jQuery) document.write('<scr'+'ipt src="//ajax.googleapis.com/ajax/li
 	<div id="djDebugWindow" class="panelContent"></div>
 </div>
 <script>//<![CDATA[
-if (require) require(['django-debug-toolbar']);
+if (typeof require !== 'undefined') {
+    // require and define must be in GNS for toolbar to work properly
+    require(['django-debug-toolbar']);
+}
 //]]></script>
